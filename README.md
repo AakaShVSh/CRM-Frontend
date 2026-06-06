@@ -18,7 +18,7 @@ npm install
 Open `src/apis/customerApi.js` and set your backend URL:
 ```js
 const baseUrl = "http://localhost:8080/api"; // local
-// const baseUrl = "https://crm-backend-p6mb.onrender.com"; // production
+// const baseUrl = "https://crm-frontend-grjk.onrender.com"; // production
 ```
 
 ### 4. Start the development server
