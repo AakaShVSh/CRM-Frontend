@@ -1,7 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const baseUrl = "https://crm-frontend-grjk.onrender.com/api";
+const baseUrl = "https://crm-backend-p6mb.onrender.com/api";
 //const baseUrl = "http://localhost:8080/api";
 
 export const getCustomerApi = async () => {
