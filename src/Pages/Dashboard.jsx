@@ -384,7 +384,7 @@ export default function Dashboard() {
               color: "#0F172A",
             }}
           >
-            Lead Status
+           Customer Status
           </p>
           <p style={{ margin: "0 0 14px", fontSize: 12, color: "#94A3B8" }}>
             By stage
