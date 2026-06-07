@@ -105,23 +105,28 @@ const Customer = () => {
       setSaving(false);
     }
   };
+const handleStatusChange = async (customer, newStatus) => {
+  const updated = { ...customer, LeadStatus: newStatus };
 
-  const handleStatusChange = async (customer, newStatus) => {
-    const updated = { ...customer, LeadStatus: newStatus };
-    setCustomers((prev) =>
-      prev.map((c) => (c._id === customer._id ? updated : c)),
-    );
-    try {
-      await updateCustomerApi(customer._id, updated);
-      toast.success("Status updated");
-    } catch {
-      setCustomers((prev) =>
-        prev.map((c) => (c._id === customer._id ? customer : c)),
-      );
-      toast.error("Failed to update status");
-    }
-  };
+  // Update BOTH states optimistically
+  const updateList = (prev) =>
+    prev.map((c) => (c._id === customer._id ? updated : c));
 
+  setCustomers(updateList);
+  setFiltered(updateList); // ← this was missing
+
+  try {
+    await updateCustomerApi(customer._id, updated);
+    toast.success("Status updated");
+  } catch {
+    // Revert BOTH on failure
+    const revert = (prev) =>
+      prev.map((c) => (c._id === customer._id ? customer : c));
+    setCustomers(revert);
+    setFiltered(revert);
+    toast.error("Failed to update status");
+  }
+};
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this customer?")) return;
     try {
