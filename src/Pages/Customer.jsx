@@ -205,7 +205,7 @@ const Customer = () => {
   );
 
   return (
-    <div className="min-h-screen bg-slate-100 p-3 sm:p-4 pt-16 lg:pt-4">
+<div className="min-h-screen bg-slate-100 p-3 sm:p-4 pt-16 lg:pt-4 ml-16 lg:ml-0">
       {modal !== null && (
         <CustomerModal
           initial={modal}
