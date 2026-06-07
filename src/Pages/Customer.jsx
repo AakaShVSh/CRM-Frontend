@@ -87,39 +87,39 @@ const Customer = () => {
     }, 400);
     return () => clearTimeout(delay);
   }, [search, statusFilter, sort, customers]);
-
-  const handleSave = async (form) => {
-    try {
-      setSaving(true);
-      if (form._id) {
-        await updateCustomerApi(form._id, form);
-      } else {
-        await addCustomerApi(form);
-      }
-      await fetchCustomers();
-      setModal(null);
-      toast.success(form._id ? "Customer updated!" : "Customer added!");
-    } catch (error) {
-      toast.error("Something went wrong");
-    } finally {
-      setSaving(false);
+const handleSave = async (form) => {
+  try {
+    setSaving(true);
+    if (form._id) {
+      const { _id, ...rest } = form; 
+      await updateCustomerApi(_id, rest); 
+    } else {
+      await addCustomerApi(form);
     }
-  };
+    await fetchCustomers();
+    setModal(null);
+    toast.success(form._id ? "Customer updated!" : "Customer added!");
+  } catch (error) {
+    toast.error("Something went wrong");
+  } finally {
+    setSaving(false);
+  }
+};
+ 
 const handleStatusChange = async (customer, newStatus) => {
   const updated = { ...customer, LeadStatus: newStatus };
 
-  // Update BOTH states optimistically
   const updateList = (prev) =>
     prev.map((c) => (c._id === customer._id ? updated : c));
 
   setCustomers(updateList);
-  setFiltered(updateList); // ← this was missing
+  setFiltered(updateList);
 
   try {
-    await updateCustomerApi(customer._id, updated);
+    const { _id, ...rest } = updated; 
+    await updateCustomerApi(_id, rest); 
     toast.success("Status updated");
   } catch {
-    // Revert BOTH on failure
     const revert = (prev) =>
       prev.map((c) => (c._id === customer._id ? customer : c));
     setCustomers(revert);

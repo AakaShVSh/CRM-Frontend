@@ -8,8 +8,6 @@ const Main = () => {
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
-
-      {/* main content — offset top on mobile for the fixed topbar */}
       <div className="flex-1 overflow-y-auto bg-slate-100 pt-14 lg:pt-0">
         <Routes>
           <Route path="/" element={<Customer />} />
